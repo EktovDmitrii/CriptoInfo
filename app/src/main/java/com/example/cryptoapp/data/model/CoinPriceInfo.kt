@@ -1,10 +1,10 @@
-package com.example.cryptoapp.pojo
+package com.example.cryptoapp.data.model
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.cryptoapp.api.ApiFactory.BASE_IMAGE_URL
+import com.example.cryptoapp.data.network.ApiFactory.BASE_IMAGE_URL
 import com.example.cryptoapp.utils.convertTimestampToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -65,7 +65,9 @@ data class CoinPriceInfo(
     @SerializedName("OPENDAY")
     @Expose
     val openday: Double?,
-    @SerializedName("HIGHDAY")
+    @SerializedName("HIGHDAY") @SerializedName("IMAGEURL")
+    @Expose
+    val imageurl: String?
     @Expose
     val highday: Double?,
     @SerializedName("LOWDAY")
@@ -155,9 +157,7 @@ data class CoinPriceInfo(
     @SerializedName("TOTALTOPTIERVOLUME24HTO")
     @Expose
     val totaltoptiervolume24hto: Double?,
-    @SerializedName("IMAGEURL")
-    @Expose
-    val imageurl: String?
+
     )
 {
     @RequiresApi(Build.VERSION_CODES.N)
