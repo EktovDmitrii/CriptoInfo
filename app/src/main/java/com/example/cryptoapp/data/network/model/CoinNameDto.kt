@@ -1,9 +1,9 @@
-package com.example.cryptoapp.data.model
+package com.example.cryptoapp.data.network.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName as SerializedName1
 
-data class CoinInfo (
+data class CoinNameDto (
 
     @SerializedName1("Name")
     @Expose

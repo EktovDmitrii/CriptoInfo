@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data.model
+package com.example.cryptoapp.data.network.model
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "full_price_list")
-data class CoinPriceInfo(
+data class CoinInfoDto(
 
     @SerializedName("TYPE")
     @Expose
@@ -65,9 +65,7 @@ data class CoinPriceInfo(
     @SerializedName("OPENDAY")
     @Expose
     val openday: Double?,
-    @SerializedName("HIGHDAY") @SerializedName("IMAGEURL")
-    @Expose
-    val imageurl: String?
+    @SerializedName("HIGHDAY")
     @Expose
     val highday: Double?,
     @SerializedName("LOWDAY")
@@ -157,7 +155,9 @@ data class CoinPriceInfo(
     @SerializedName("TOTALTOPTIERVOLUME24HTO")
     @Expose
     val totaltoptiervolume24hto: Double?,
-
+    @SerializedName("IMAGEURL")
+    @Expose
+    val imageurl: String?
     )
 {
     @RequiresApi(Build.VERSION_CODES.N)
