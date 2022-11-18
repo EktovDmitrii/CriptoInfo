@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 // Дао интерфейс берет данные и экземпляры из класса дата бей
-@Database(entities = [CoinInfoDbModel::class], version = 1, exportSchema = false)
+@Database(entities = [CoinInfoDbModel::class], version = 2, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
     companion object {
         private var db: AppDataBase? = null
@@ -21,7 +21,9 @@ abstract class AppDataBase : RoomDatabase() {
                         context,
                         AppDataBase::class.java,
                         DB_NAME
-                    ).build()
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
                 db = instance
                 return instance
             }

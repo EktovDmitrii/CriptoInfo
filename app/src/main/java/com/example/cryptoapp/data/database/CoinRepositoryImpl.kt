@@ -1,6 +1,7 @@
 package com.example.cryptoapp.data.database
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.cryptoapp.data.mapper.CoinMapper
@@ -33,11 +34,11 @@ class CoinRepositoryImpl(private val application: Application) : CoinRepository 
         while (true) {
             try {
                 val topCoins = apiService.getTopCoinsInfo(limit = 50)
+                Log.e("tagtag", topCoins.toString())
                 val fSyms = mapper.mapCoinNamesListToString(topCoins)
                 val jsonContainer = apiService.getFullPriceList(fSyms = fSyms)
                 val coinInfoDtoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
-                val dbModelList = coinInfoDtoList.map {
-                    mapper.mapDtoToDBModel(it) }
+                val dbModelList = coinInfoDtoList.map { mapper.mapDtoToDBModel(it) }
                 coinInfoDao.insertPriceList(dbModelList)
             } catch (e: Exception) {
             }

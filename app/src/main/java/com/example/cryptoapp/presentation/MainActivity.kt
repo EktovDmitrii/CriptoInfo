@@ -1,6 +1,7 @@
 package com.example.cryptoapp.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
@@ -25,11 +26,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        rvCoinPriceList.adapter = adapter
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         viewModel.coinInfoList.observe(this) {
             adapter.coinInfoList = it
         }
+        rvCoinPriceList.adapter = adapter
     }
 }
 
