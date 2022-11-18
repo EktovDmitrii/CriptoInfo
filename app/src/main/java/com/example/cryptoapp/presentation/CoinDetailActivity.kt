@@ -6,16 +6,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
+import com.example.cryptoapp.databinding.ActivityCoinDetailBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_coin_detail.*
 
 class CoinDetailActivity : AppCompatActivity() {
-
+    private val binding by lazy {
+        ActivityCoinDetailBinding.inflate(layoutInflater)
+    }
     private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_detail)
+        setContentView(binding.root)
         if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
             finish()
             return
@@ -23,14 +25,16 @@ class CoinDetailActivity : AppCompatActivity() {
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: "EMPTY_SMBL"
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         viewModel.getDetailInfo(fromSymbol.toString()).observe(this) {
-            tvAveragePriceValue.text = it.price.toString()
-            tvMinPricePerDay.text = it.lowday.toString()
-            tvMaxPricePerDay.text = it.highday.toString()
-            tvLastDealValue.text = it.lastmarket.toString()
-            tvLastUpdate.text = it.lastupdate
-            tvFromSymbol.text = it.fromsymbol
-            tvToSymbol.text = it.tosymbol
-            Picasso.get().load(it.imageurl).into(ivLogoCoin)
+            with(binding) {
+                tvAveragePriceValue.text = it.price.toString()
+                tvMinPricePerDay.text = it.lowday.toString()
+                tvMaxPricePerDay.text = it.highday.toString()
+                tvLastDealValue.text = it.lastmarket.toString()
+                tvLastUpdate.text = it.lastupdate
+                tvFromSymbol.text = it.fromsymbol
+                tvToSymbol.text = it.tosymbol
+                Picasso.get().load(it.imageurl).into(ivLogoCoin)
+            }
 
         }
     }
