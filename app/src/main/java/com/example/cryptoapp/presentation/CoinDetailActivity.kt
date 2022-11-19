@@ -13,7 +13,6 @@ class CoinDetailActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCoinDetailBinding.inflate(layoutInflater)
     }
-    private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,21 +21,14 @@ class CoinDetailActivity : AppCompatActivity() {
             finish()
             return
         }
-        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: "EMPTY_SMBL"
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        viewModel.getDetailInfo(fromSymbol.toString()).observe(this) {
-            with(binding) {
-                tvAveragePriceValue.text = it.price.toString()
-                tvMinPricePerDay.text = it.lowday.toString()
-                tvMaxPricePerDay.text = it.highday.toString()
-                tvLastDealValue.text = it.lastmarket.toString()
-                tvLastUpdate.text = it.lastupdate
-                tvFromSymbol.text = it.fromsymbol
-                tvToSymbol.text = it.tosymbol
-                Picasso.get().load(it.imageurl).into(ivLogoCoin)
-            }
-
+        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: "EMPTY_SYMBOL"
+        if (savedInstanceState == null){
+            val fragment = CoinDetailFragment.newInstance(fromSymbol)
+supportFragmentManager.beginTransaction()
+    .replace(R.id.coin_detail_container, fragment)
+    .commit()
         }
+
     }
 
     companion object {
