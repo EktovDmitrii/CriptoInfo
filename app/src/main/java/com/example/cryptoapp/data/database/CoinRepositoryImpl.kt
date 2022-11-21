@@ -12,11 +12,14 @@ import com.example.cryptoapp.data.worker.RefreshDataWorker
 import com.example.cryptoapp.domain.CoinInfo
 import com.example.cryptoapp.domain.CoinRepository
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class CoinRepositoryImpl(private val application: Application) : CoinRepository {
+class CoinRepositoryImpl @Inject constructor(
+    private val mapper: CoinMapper,
+    private val coinInfoDao: CoinInfoDao,
+    private val application: Application
+) : CoinRepository {
 
-    private val coinInfoDao = AppDataBase.getInstance(application).coinInfoDao()
-    private val mapper = CoinMapper()
 
     override fun getCoinInfoList(): LiveData<List<CoinInfo>> {
         return Transformations.map(coinInfoDao.getCoinInfoList()) {
@@ -32,10 +35,10 @@ class CoinRepositoryImpl(private val application: Application) : CoinRepository 
         }
     }
 
-    override   fun loadData() {
-val workManager = WorkManager.getInstance(application)
+    override fun loadData() {
+        val workManager = WorkManager.getInstance(application)
         workManager.enqueueUniqueWork(
-RefreshDataWorker.NAME,
+            RefreshDataWorker.NAME,
             ExistingWorkPolicy.REPLACE,
             RefreshDataWorker.makeRequest()
         )

@@ -9,8 +9,9 @@ import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ItemCoinInfoBinding
 import com.example.cryptoapp.domain.CoinInfo
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
-class CoinInfoAdapter(private val context: Context) : ListAdapter<CoinInfo,
+class CoinInfoAdapter @Inject constructor(private val context: Context) : ListAdapter<CoinInfo,
         CoinInfoViewHolder>(CoinInfoDiffCallback) {
 
     var onCoinClickListener: OnCoinClickListener? = null

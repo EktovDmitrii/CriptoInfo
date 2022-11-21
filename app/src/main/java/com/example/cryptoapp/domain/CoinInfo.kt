@@ -1,7 +1,9 @@
 package com.example.cryptoapp.domain
 
+import javax.inject.Inject
 
-data class CoinInfo(
+
+data class CoinInfo @Inject constructor(
     val price: Double?,
     val lowday: Double?,
     val highday: Double?,

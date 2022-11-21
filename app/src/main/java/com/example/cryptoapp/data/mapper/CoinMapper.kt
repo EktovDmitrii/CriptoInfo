@@ -10,8 +10,9 @@ import com.example.cryptoapp.domain.CoinInfo
 import com.google.gson.Gson
 import java.sql.Timestamp
 import java.util.*
+import javax.inject.Inject
 
-class CoinMapper {
+class CoinMapper @Inject constructor() {
 
     fun mapDtoToDBModel(dto: CoinInfoDto) = CoinInfoDbModel(
         fromsymbol = dto.fromsymbol,

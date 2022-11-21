@@ -14,6 +14,7 @@ import com.example.cryptoapp.databinding.ActivityCoinDetailBinding
 import com.example.cryptoapp.databinding.FragmentCoinDetailBinding
 import com.squareup.picasso.Picasso
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 class CoinDetailFragment : Fragment() {
 
@@ -22,8 +23,19 @@ class CoinDetailFragment : Fragment() {
     get() = _binding ?: throw RuntimeException("FragmentCoinDetailBinding is null")
 
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as CoinApp).component
+    }
 
     private lateinit var viewModel: CoinViewModel
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +49,7 @@ class CoinDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fromSymbol = getSymbol()
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
         viewModel.getDetailInfo(fromSymbol.toString()).observe(viewLifecycleOwner) {
             with(binding) {
                 tvAveragePriceValue.text = it.price.toString()
